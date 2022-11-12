@@ -39,7 +39,7 @@ class KColorPickerPrivate
 
 	KColorPicker *const q_ptr;
 	QSize mIconSize;
-	PopupMenu *mPopupMenu;
+	PopupMenu mPopupMenu;
 	QColor mSelectedColor;
 };
 
@@ -128,6 +128,30 @@ void KColorPicker::setColorIcon(const QColor &color)
 	setToolTip(color.name());
 }
 
+void KColorPicker::setColorList(const QList<QColor> &colorList)
+{
+    Q_D(KColorPicker);
+    d->mPopupMenu.clear();
+    for (auto color: colorList) {
+        d->mPopupMenu.addColor(color);
+    }
+}
+
+void KColorPicker::setColorList(const QVector<QColor> &colorList)
+{
+    Q_D(KColorPicker);
+    d->mPopupMenu.clear();
+    for (auto color: colorList) {
+        d->mPopupMenu.addColor(color);
+    }
+}
+
+QColor KColorPicker::selectedColor()
+{
+    Q_D(KColorPicker);
+    return d->mSelectedColor;
+}
+
 //
 // KColorPickerPrivate
 //
@@ -142,6 +166,17 @@ KColorPickerPrivate::KColorPickerPrivate(KColorPicker *kColorPicker, bool showAl
 	kColorPicker->setPopupMode(QToolButton::InstantPopup);
 	kColorPicker->setMenu(mPopupMenu);
 	kColorPicker->connect(mPopupMenu, &PopupMenu::colorChanged, kColorPicker, &KColorPicker::colorSelected);
+
+	// Default Colors
+	mPopupMenu.addColor(QColor(Qt::red));
+	mPopupMenu.addColor(QColor(Qt::green));
+	mPopupMenu.addColor(QColor(Qt::blue));
+	mPopupMenu.addColor(QColor(Qt::yellow));
+	mPopupMenu.addColor(QColor(Qt::magenta));
+	mPopupMenu.addColor(QColor(Qt::cyan));
+	mPopupMenu.addColor(QColor(Qt::white));
+	mPopupMenu.addColor(QColor(Qt::black));
+
 }
 
 } // namespace kColorPicker

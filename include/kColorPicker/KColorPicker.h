@@ -44,16 +44,19 @@ public:
 	QColor color() const;
 	void resetColors(bool showAlphaChannel = false);
 
-public Q_SLOTS:
+	void setColorList(const QList<QColor> &colorList);
+	void setColorList(const QVector<QColor> &colorList);
+	QColor selectedColor();
+public slots:
 	void setColor(const QColor &color);
 
-Q_SIGNALS:
+signals:
 	void colorChanged(const QColor &color) const;
 
 private:
 	QScopedPointer<KColorPickerPrivate> const d_ptr;
 
-private Q_SLOTS:
+private slots:
 	void setColorIcon(const QColor &color);
 	void setIconSize(const QSize &size);
 	void colorSelected(const QColor &color);
